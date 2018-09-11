@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Motor">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dist/run856232135/Motor.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Motor/dist/Motor.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

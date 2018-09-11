@@ -27,6 +27,6 @@
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Motor" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="lk.ijse.motor.main.StartUp"  name="Motor" />
+  <jfx:javafx-desc width="800" height="600" main-class="lk.ijse.motor.main.AppInitializer" name="Motor" />
   <update check="always"/>
 </jnlp>

@@ -7,7 +7,7 @@ package lk.ijse.motor.bussiness.custom.impl;
 
 import lk.ijse.motor.bussiness.custom.InvoiceBO;
 import lk.ijse.motor.bussiness.custom.InvoicedetailBO;
-import lk.ijse.motor.dao.DAOFactory;
+
 import lk.ijse.motor.dao.custom.InvoiceDAO;
 import lk.ijse.motor.dao.custom.InvoiceDetailDAO;
 import lk.ijse.motor.dto.InvoiceDTO;
@@ -15,24 +15,30 @@ import lk.ijse.motor.dto.InvoiceDetailDTO;
 import lk.ijse.motor.entity.Customer;
 import lk.ijse.motor.entity.InvoiceDetail;
 import lk.ijse.motor.entity.InvoiceDetail_PK;
-import lk.ijse.motor.util.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+
+@Component
+@Transactional
 public class InvoicedetailBOImpl implements InvoicedetailBO{
-    
+    @Autowired
     InvoiceDetailDAO invoiceDetailDAO;
-    private SessionFactory sessionFactory;
+
 
 
     public InvoicedetailBOImpl() {
-        invoiceDetailDAO=(InvoiceDetailDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.INVOICEDETAIL);
-        sessionFactory = HibernateUtil.getSessionFactory();
+        //invoiceDetailDAO=(InvoiceDetailDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.INVOICEDETAIL);
+
     }
 
     @Override
@@ -44,14 +50,12 @@ public class InvoicedetailBOImpl implements InvoicedetailBO{
 //        return invoiceDetailDAO.save(invoiceDetail);
 //
 
-        try (Session session = sessionFactory.openSession()) {
+        try  {
 
-            invoiceDetailDAO.setSession(session);
-            session.beginTransaction();
+
+
             InvoiceDetail invoiceDetail=new InvoiceDetail(entity.getDetail(),entity.getQty(),entity.getSelling_price(), entity.getTotal(), entity.getTotal_amount(), entity.getIid(), entity.getPid());
             invoiceDetailDAO.save(invoiceDetail);
-
-            session.getTransaction().commit();
             return true;
 
 
@@ -74,11 +78,11 @@ public class InvoicedetailBOImpl implements InvoicedetailBO{
 //return invoiceDetailDAO.delete(p);
 
 
-        try (Session session = sessionFactory.openSession()) {
-            invoiceDetailDAO.setSession(session);
-            session.beginTransaction();
+        try {
+
+
             invoiceDetailDAO.delete(p);
-            session.getTransaction().commit();
+
             return true;
         }catch (HibernateException exp){
             return false;

@@ -30,10 +30,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.motor.bussiness.BOFactory;
+
 import lk.ijse.motor.bussiness.custom.PartBO;
 import lk.ijse.motor.bussiness.custom.VehicleBO;
+import lk.ijse.motor.bussiness.custom.impl.PartBOImpl;
+import lk.ijse.motor.bussiness.custom.impl.VehicleBOImpl;
 import lk.ijse.motor.dto.PartDTO;
+import lk.ijse.motor.main.AppInitializer;
 import lk.ijse.motor.view.util.tblmodel.LessQty;
 
 /**
@@ -61,8 +64,8 @@ public class DashboardController implements Initializable {
 
     public DashboardController() {
 
-        partBO = (PartBO) BOFactory.getInstance().getBOType(BOFactory.BOType.PART);
-        vehicleBO=(VehicleBO) BOFactory.getInstance().getBOType(BOFactory.BOType.VEHICLE);
+        partBO =  AppInitializer.ctx.getBean(PartBO.class);
+        vehicleBO=AppInitializer.ctx.getBean(VehicleBO.class);
 
     }
 

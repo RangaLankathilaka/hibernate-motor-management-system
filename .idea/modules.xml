@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Motor.iml" filepath="$PROJECT_DIR$/Motor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Motor/Motor.iml" filepath="$PROJECT_DIR$/Motor/Motor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestLiteandFull/TestLiteandFull.iml" filepath="$PROJECT_DIR$/TestLiteandFull/TestLiteandFull.iml" />
     </modules>
   </component>
 </project>

@@ -13,11 +13,13 @@ import lk.ijse.motor.dao.CrudDAOImpl;
 import lk.ijse.motor.dao.custom.InvoiceDetailDAO;
 import lk.ijse.motor.entity.InvoiceDetail;
 import lk.ijse.motor.entity.InvoiceDetail_PK;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+@Component
 public class InvoiceDetailDaoImpl extends CrudDAOImpl<InvoiceDetail,InvoiceDetail_PK> implements InvoiceDetailDAO{
 //    pid           | int(11)     | NO   | PRI | NULL    |       |
 //| iid           | int(11)     | NO   | PRI | NULL    |       |

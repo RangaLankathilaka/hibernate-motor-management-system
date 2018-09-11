@@ -7,9 +7,7 @@ package lk.ijse.motor.controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.deploy.util.FXLoader;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -27,11 +25,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lk.ijse.motor.bussiness.BOFactory;
+
 import lk.ijse.motor.bussiness.custom.PartBO;
 import lk.ijse.motor.bussiness.custom.impl.PartBOImpl;
 import lk.ijse.motor.dto.PartDTO;
-import lk.ijse.motor.main.StartUp;
+import lk.ijse.motor.main.AppInitializer;
 import lk.ijse.motor.view.util.tblmodel.PartTM;
 
 /**
@@ -63,7 +61,8 @@ public class ManagePartController implements Initializable{
     
     
     public ManagePartController(){
-      this.partBO=(PartBO) BOFactory.getInstance().getBOType(BOFactory.BOType.PART); 
+
+        partBO =  AppInitializer.ctx.getBean(PartBO.class);
     }
     private void save(){
         try {
@@ -223,6 +222,6 @@ Logger.getLogger(ManagePartController.class.getName()).log(Level.SEVERE, null, e
 
     @FXML
     private void navigateToHome(javafx.scene.input.MouseEvent event) {
-          StartUp.navigateToHome(root, (Stage) this.root.getScene().getWindow());
+          AppInitializer.navigateToHome(root, (Stage) this.root.getScene().getWindow());
     }
 }

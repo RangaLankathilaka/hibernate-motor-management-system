@@ -13,11 +13,13 @@ import lk.ijse.motor.dao.CrudDAOImpl;
 
 import lk.ijse.motor.dao.custom.VehecleDAO;
 import lk.ijse.motor.entity.Vehicle;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+@Component
 public class VehicleDaoImpl extends CrudDAOImpl<Vehicle,Integer> implements VehecleDAO{
 
 

@@ -15,11 +15,13 @@ import lk.ijse.motor.dao.custom.CustomerDetailDAO;
 import lk.ijse.motor.entity.Customer;
 import lk.ijse.motor.entity.CustomerDetail;
 import lk.ijse.motor.entity.CustomerDetail_PK;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+@Component
 public class CustomerDetailDaoImpl extends CrudDAOImpl<CustomerDetail,CustomerDetail_PK> implements  CustomerDetailDAO{
 
 

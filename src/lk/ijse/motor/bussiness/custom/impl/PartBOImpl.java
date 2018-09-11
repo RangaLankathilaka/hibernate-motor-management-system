@@ -9,31 +9,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lk.ijse.motor.bussiness.custom.PartBO;
-import lk.ijse.motor.dao.DAOFactory;
+
 import lk.ijse.motor.dao.custom.PartDAO;
 import lk.ijse.motor.dto.CustomerDTO;
 import lk.ijse.motor.dto.PartDTO;
 import lk.ijse.motor.entity.Customer;
 import lk.ijse.motor.entity.Part;
-import lk.ijse.motor.util.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+
+@Component
+@Transactional
 public class PartBOImpl implements PartBO{
-    
+    @Autowired
    private PartDAO partDAO;
-    private SessionFactory sessionFactory;
+
     
     
     public PartBOImpl(){
 
-        this.partDAO= (PartDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.PART);
-        sessionFactory = HibernateUtil.getSessionFactory();
+       // this.partDAO= (PartDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.PART);
+
     }
 
     @Override
@@ -46,14 +52,12 @@ public class PartBOImpl implements PartBO{
 
 
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
 
-            partDAO.setSession(session);
-            session.beginTransaction();
+
             Part part=new Part(dto.getPid(),dto.getPname(),dto.getBuying_price(),dto.getSelling_price(),dto.getQty(),dto.getSupplier());
             partDAO.save(part);
 
-            session.getTransaction().commit();
             return true;
 
 
@@ -75,11 +79,11 @@ public class PartBOImpl implements PartBO{
 
 
 
-        try (Session session = sessionFactory.openSession()) {
-            partDAO.setSession(session);
-            session.beginTransaction();
+        try  {
+
+
             partDAO.delete(pid);
-            session.getTransaction().commit();
+
             return true;
         }catch (HibernateException exp){
             return false;
@@ -94,13 +98,12 @@ public class PartBOImpl implements PartBO{
 
 
 
-        try (Session session = sessionFactory.openSession()) {
-            partDAO.setSession(session);
-            session.beginTransaction();
+        try  {
+
 
             List<Part> allPartss = partDAO.getAll();
 
-            session.getTransaction().commit();
+
 
             ArrayList<PartDTO> dtos = new ArrayList<>();
 
@@ -139,13 +142,12 @@ public class PartBOImpl implements PartBO{
 
 
 
-        try (Session session = sessionFactory.openSession()) {
-            partDAO.setSession(session);
-            session.beginTransaction();
+        try  {
+
 
             Part find = partDAO.find(pid);
 
-            session.getTransaction().commit();
+
 
             String pname = find.getPname();
        int selling_price = find.getSelling_price();

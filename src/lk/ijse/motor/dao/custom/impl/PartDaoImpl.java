@@ -13,11 +13,13 @@ import lk.ijse.motor.dao.CrudDAO;
 import lk.ijse.motor.dao.CrudDAOImpl;
 import lk.ijse.motor.dao.custom.PartDAO;
 import lk.ijse.motor.entity.Part;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+@Component
 public class PartDaoImpl extends CrudDAOImpl<Part,Integer> implements PartDAO{
 //     pid           | int(11)     | NO   | PRI | NULL    |       |
 //| pname         | varchar(45) | NO   |     | NULL    |       |

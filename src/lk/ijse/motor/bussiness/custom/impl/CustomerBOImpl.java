@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lk.ijse.motor.bussiness.custom.CustomerBO;
-import lk.ijse.motor.dao.DAOFactory;
+
 import lk.ijse.motor.dao.custom.CustomerDAO;
 import lk.ijse.motor.dao.custom.CustomerDetailDAO;
 import lk.ijse.motor.dao.custom.InvoiceDAO;
@@ -29,32 +29,37 @@ import lk.ijse.motor.entity.CustomerDetail;
 import lk.ijse.motor.entity.Invoice;
 import lk.ijse.motor.entity.InvoiceDetail;
 import lk.ijse.motor.entity.Part;
-import lk.ijse.motor.util.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+
+@Component
+@Transactional
 public class CustomerBOImpl implements CustomerBO {
-    
+    @Autowired
     CustomerDAO customerDAO;
+    @Autowired
     InvoiceDAO invoiceDAO;
+    @Autowired
     InvoiceDetailDAO invoiceDetailDAO;
+    @Autowired
     CustomerDetailDAO customerDetailDAO;
+    @Autowired
     PartDAO partDAO;
-    private SessionFactory sessionFactory;
+
     
     public CustomerBOImpl() {
-        customerDAO = (CustomerDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.CUSTOMER);
-        invoiceDAO = (InvoiceDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.INVOICE);
-        invoiceDetailDAO = (InvoiceDetailDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.INVOICEDETAIL);
-        customerDetailDAO = (CustomerDetailDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.CUSTOMERDETAIL);
-        partDAO = (PartDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.PART);
-        sessionFactory = HibernateUtil.getSessionFactory();
+
     }
 
 //    @Override
@@ -67,11 +72,10 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean delete(Integer cid) throws Exception {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
-        try (Session session = sessionFactory.openSession()) {
-            customerDAO.setSession(session);
-            session.beginTransaction();
+        try  {
+
             customerDAO.delete(cid);
-            session.getTransaction().commit();
+
             return true;
         }catch (HibernateException exp){
             return false;
@@ -83,13 +87,12 @@ public class CustomerBOImpl implements CustomerBO {
     public ArrayList<CustomerDTO> getAll(CustomerDTO dto) throws Exception {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
-        try (Session session = sessionFactory.openSession()) {
-            customerDAO.setSession(session);
-            session.beginTransaction();
+        try {
+
 
             List<Customer> allCustomers = customerDAO.getAll();
 
-            session.getTransaction().commit();
+
 
             ArrayList<CustomerDTO> dtos = new ArrayList<>();
 
@@ -110,16 +113,12 @@ public class CustomerBOImpl implements CustomerBO {
 
         Transaction transObj = null;
 
-        try (Session session = sessionFactory.openSession()) {
-
-            customerDAO.setSession(session);
-            invoiceDAO.setSession(session);
-            invoiceDetailDAO.setSession(session);
-            customerDetailDAO.setSession(session);
-            partDAO.setSession(session);
+        try {
 
 
-            transObj=session.beginTransaction();
+
+
+
             Customer customer = new Customer(cus.getCid(), cus.getCname(), cus.getContact(), cus.getAddress());
             customerDAO.save(customer);
 
@@ -161,16 +160,12 @@ public class CustomerBOImpl implements CustomerBO {
 
 
 
-            session.getTransaction().commit();
+
             return true;
 
 
         } catch (HibernateException exp) {
-            if(transObj!=null){
 
-                transObj.rollback();
-
-            }
 
             return false;
 
@@ -182,15 +177,14 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean save(CustomerDTO dto) throws Exception {
 
 
-        try (Session session = sessionFactory.openSession()) {
+        try  {
 
-            customerDAO.setSession(session);
-            session.beginTransaction();
+
             Customer customer = new Customer(dto.getCid(), dto.getCname(), dto.getContact(), dto.getAddress());
             customerDAO.save(customer);
 
 
-            session.getTransaction().commit();
+
             return true;
 
 

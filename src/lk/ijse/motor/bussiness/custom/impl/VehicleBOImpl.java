@@ -6,29 +6,35 @@
 package lk.ijse.motor.bussiness.custom.impl;
 
 import lk.ijse.motor.bussiness.custom.VehicleBO;
-import lk.ijse.motor.dao.DAOFactory;
+
 import lk.ijse.motor.dao.custom.VehecleDAO;
 import lk.ijse.motor.dto.VehicleDTO;
 import lk.ijse.motor.entity.Customer;
 import lk.ijse.motor.entity.Vehicle;
-import lk.ijse.motor.util.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Ranga Lankathilaka
  */
+@Component
+@Transactional
 public class VehicleBOImpl implements VehicleBO{
+    @Autowired
     VehecleDAO vehecleDAO;
-    private SessionFactory sessionFactory;
+
 
     public VehicleBOImpl() {
 
-        vehecleDAO=(VehecleDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.VEHICLE);
-        sessionFactory = HibernateUtil.getSessionFactory();
+        // vehecleDAO=(VehecleDAO) DAOFactory.getInstance().getDaotype(DAOFactory.Daotype.VEHICLE);
     }
+
     
 
     @Override
@@ -41,15 +47,14 @@ public class VehicleBOImpl implements VehicleBO{
 
 
 
-        try (Session session = sessionFactory.openSession()) {
+        try {
 
-            vehecleDAO.setSession(session);
-            session.beginTransaction();
+
 
             Vehicle vehicle = new Vehicle(entity.getVid(),entity.getType(),entity.getIssue(),null);
             vehecleDAO.save(vehicle);
 
-            session.getTransaction().commit();
+
             return true;
 
 

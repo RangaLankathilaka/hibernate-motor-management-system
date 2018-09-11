@@ -12,5 +12,8 @@ import org.hibernate.Session;
  * @author Ranga Lankathilaka
  */
 public interface SuperDao {
-    void setSession(Session session);
+
+    Session getSession();
+
+    // void setSession(Session session);
 }

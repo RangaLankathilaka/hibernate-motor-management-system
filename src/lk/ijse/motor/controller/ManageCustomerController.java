@@ -5,10 +5,9 @@
  */
 package lk.ijse.motor.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,18 +16,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
-import javafx.beans.property.SetProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
@@ -38,25 +31,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.motor.bussiness.BOFactory;
+
 import lk.ijse.motor.bussiness.custom.CustomerBO;
 import lk.ijse.motor.bussiness.custom.CustomerDetailBO;
 import lk.ijse.motor.bussiness.custom.InvoiceBO;
 import lk.ijse.motor.bussiness.custom.InvoicedetailBO;
 import lk.ijse.motor.bussiness.custom.PartBO;
 import lk.ijse.motor.bussiness.custom.VehicleBO;
-import lk.ijse.motor.dao.custom.InvoiceDetailDAO;
-import lk.ijse.motor.dao.custom.PartDAO;
+import lk.ijse.motor.bussiness.custom.impl.*;
 import lk.ijse.motor.dto.CustomerDTO;
 import lk.ijse.motor.dto.CustomerDetailDTO;
 import lk.ijse.motor.dto.InvoiceDTO;
 import lk.ijse.motor.dto.InvoiceDetailDTO;
 import lk.ijse.motor.dto.PartDTO;
 import lk.ijse.motor.dto.VehicleDTO;
-import lk.ijse.motor.entity.InvoiceDetail;
-import lk.ijse.motor.main.StartUp;
+import lk.ijse.motor.main.AppInitializer;
 import lk.ijse.motor.view.util.tblmodel.ListTM;
-import lk.ijse.motor.view.util.tblmodel.PartTM;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -117,12 +107,13 @@ public class ManageCustomerController implements Initializable {
     
 
     public ManageCustomerController() {
-        partBO = (PartBO) BOFactory.getInstance().getBOType(BOFactory.BOType.PART);
-        invoiceBO = (InvoiceBO) BOFactory.getInstance().getBOType(BOFactory.BOType.INVOICE);
-        customerBO = (CustomerBO) BOFactory.getInstance().getBOType(BOFactory.BOType.CUSTOMER);
-        vehicleBO = (VehicleBO) BOFactory.getInstance().getBOType(BOFactory.BOType.VEHICLE);
-        invoicedetailBO = (InvoicedetailBO) BOFactory.getInstance().getBOType(BOFactory.BOType.INVOICEDETAIL);
-        customerDetailBO = (CustomerDetailBO) BOFactory.getInstance().getBOType(BOFactory.BOType.CUSTOMERDETAIL);
+       // customerBO = AppInitializer.ctx.getBean(CustomerBOImpl.class);
+        partBO =  AppInitializer.ctx.getBean(PartBO.class);
+        invoiceBO = AppInitializer.ctx.getBean(InvoiceBO.class);
+        customerBO = AppInitializer.ctx.getBean(CustomerBO.class);
+        vehicleBO = AppInitializer.ctx.getBean(VehicleBO.class);
+        invoicedetailBO = AppInitializer.ctx.getBean(InvoicedetailBO.class);
+        customerDetailBO = AppInitializer.ctx.getBean(CustomerDetailBO.class);
     }
 
     @FXML
@@ -627,7 +618,7 @@ public class ManageCustomerController implements Initializable {
 
     @FXML
     private void navigateToHome(MouseEvent event) {
-          StartUp.navigateToHome(root, (Stage) this.root.getScene().getWindow());
+          AppInitializer.navigateToHome(root, (Stage) this.root.getScene().getWindow());
     }
 
     
